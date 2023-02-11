@@ -34,11 +34,18 @@ func main() {
 	// }
 
 	// Implement Update User. 
-	updateUser := User{"alarm9", "w3ddin@", "Joe Nat"};
-	err = UpdateUser(updateUser, 3);
+	// updateUser := User{"alarm9", "w3ddin@", "Joe Nat"};
+	// err = UpdateUser(updateUser, 3);
+	// if err != nil {
+	// 	fmt.Println("[ERROR] Cannot Update User");
+	// 	fmt.Println(err);
+	// }
+
+	// Implement Delete User. 
+	err = DeleteUser(3);
 	if err != nil {
-		fmt.Println("[ERROR] Cannot Update User");
-		fmt.Println(err);
+		fmt.Println("[ERROR] Cannot Delete User");
+		fmt.Println(err); 
 	}
 
 	// Implement Get Users.
@@ -149,6 +156,25 @@ func UpdateUser(user User, id int) error {
 	}
 	if affected <= 0 {
 		return errors.New("[ERROR] Cannot Update Data");
+	}
+
+	return nil; 
+}
+
+// Delete New User. 
+func DeleteUser(id int) error {
+	query := "DELETE FROM lingoquest_users WHERE id=?";
+	result, err := db.Exec(query, id);
+	if err != nil {
+		return err; 
+	}
+
+	affected, err := result.RowsAffected();
+	if err != nil {
+		return err;
+	}
+	if affected <= 0 {
+		return errors.New("[ERROR] Cannot Delete Data");
 	}
 
 	return nil; 
